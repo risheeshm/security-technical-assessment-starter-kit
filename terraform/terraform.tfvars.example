@@ -1,0 +1,18 @@
+# OCI Authentication
+tenancy_ocid     = "ocid1.tenancy.oc1..aaaaaaaaXXXXXXXXXXXXXXXXXXXX"
+user_ocid        = "ocid1.user.oc1..aaaaaaaaXXXXXXXXXXXXXXXXXXXX"
+fingerprint      = "XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX"
+private_key_path = "~/.oci/oci_api_key.pem"
+region           = "us-ashburn-1"
+compartment_ocid = "ocid1.compartment.oc1..aaaaaaaaXXXXXXXXXXXXXXXXXXXX"
+
+# Project Configuration
+project_name  = "realestate-marketplace"
+use_free_tier = true
+
+# Database Configuration
+db_name     = "realestatedb"
+db_password = "CHANGE_ME_12Char_Pass!"
+
+# Application Configuration
+jwt_secret = "CHANGE_ME_JWT_SECRET_KEY"

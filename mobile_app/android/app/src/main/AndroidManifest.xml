@@ -1,0 +1,105 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- VULN-093: Network Security - Allow cleartext traffic -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    
+    <application
+        android:label="mobile_app"
+        android:name="${applicationName}"
+        android:icon="@mipmap/ic_launcher"
+        android:allowBackup="true"
+        android:debuggable="true"
+        android:usesCleartextTraffic="true"
+        android:networkSecurityConfig="@xml/network_security_config">
+        
+        <!-- VULN-094: Main Activity with taskAffinity vulnerability -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:taskAffinity="com.realestate.vulnerable"
+            android:theme="@style/LaunchTheme"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize">
+            <meta-data
+              android:name="io.flutter.embedding.android.NormalTheme"
+              android:resource="@style/NormalTheme"
+              />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            
+            <!-- VULN-095: Deep-link with privilege escalation -->
+            <intent-filter android:autoVerify="false">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="realestate"
+                      android:host="admin" />
+            </intent-filter>
+        </activity>
+        
+        <!-- VULN-096: Exported Activity without permission check -->
+        <activity
+            android:name=".PrivilegedActivity"
+            android:exported="true"
+            android:label="Admin Panel">
+            <intent-filter>
+                <action android:name="com.realestate.ADMIN_ACTION" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <!-- VULN-097: Exported Service without caller identity check -->
+        <service
+            android:name=".DataSyncService"
+            android:exported="true"
+            android:permission="">
+            <intent-filter>
+                <action android:name="com.realestate.SYNC_DATA" />
+            </intent-filter>
+        </service>
+        
+        <!-- VULN-098: Exported BroadcastReceiver - confused deputy -->
+        <receiver
+            android:name=".CommandReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.realestate.EXECUTE_COMMAND" />
+            </intent-filter>
+        </receiver>
+        
+        <!-- VULN-099: ContentProvider with path traversal vulnerability -->
+        <!-- Note: FileProvider must be exported=false per Android security -->
+        <!-- Vulnerability is in file_paths.xml exposing root path -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.realestate.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        <!-- Don't delete the meta-data below.
+             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
+    </application>
+    <!-- Required to query activities that can process text, see:
+         https://developer.android.com/training/package-visibility and
+         https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
+
+         In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.PROCESS_TEXT"/>
+            <data android:mimeType="text/plain"/>
+        </intent>
+    </queries>
+</manifest>

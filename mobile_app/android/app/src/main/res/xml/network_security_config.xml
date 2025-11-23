@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- VULN-100: Insecure Network Security Config -->
+<network-security-config>
+    <!-- Trust user-added CA certificates -->
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="user" />
+        </trust-anchors>
+    </base-config>
+    
+    <!-- VULN-101: Disable certificate pinning for all domains -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">10.0.2.2</domain>
+        <domain includeSubdomains="true">localhost</domain>
+        <domain includeSubdomains="true">192.168.0.0/16</domain>
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="user" />
+        </trust-anchors>
+    </domain-config>
+    
+    <!-- Debug domains with cleartext - TOFU vulnerability -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">api.example.com</domain>
+    </domain-config>
+</network-security-config>

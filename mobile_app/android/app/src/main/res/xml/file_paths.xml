@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- VULN-102: File Provider with path traversal -->
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Vulnerable: exposes entire external storage -->
+    <external-path name="external_files" path="." />
+    
+    <!-- Vulnerable: exposes app's private directory -->
+    <files-path name="app_files" path="." />
+    
+    <!-- Vulnerable: exposes cache directory with sensitive data -->
+    <cache-path name="cache_files" path="." />
+    
+    <!-- Root access - extremely dangerous -->
+    <root-path name="root" path="/" />
+</paths>
