@@ -80,6 +80,50 @@ At the end of your assessment, please submit:
 
 2.  **CI/CD Configuration**: Your `.gitlab-ci.yml` file demonstrating the automated security checks.
 
+## Submission Instructions
+
+> **IMPORTANT**: You must complete the `SUBMISSION.md` file to document your work and findings.
+
+### How to Submit Your Assessment
+
+1. **Fill Out SUBMISSION.md**
+   - Open the `SUBMISSION.md` file in the root of this repository
+   - Complete ALL sections with your assessment details:
+     - How to run the application (Docker Compose)
+     - How to run the mobile application
+     - Your CI/CD approach and security tools used
+     - List of AI tools you used (if any)
+     - Documentation of all vulnerabilities found
+
+2. **Submit Your Security Report**
+   - Place your comprehensive security report PDF in: `submissions/reports/`
+   - Name your file: `[YourName]_Security_Assessment_Report.pdf`
+   - Ensure your report includes all required sections (see Deliverables above)
+
+3. **Commit Your CI/CD Configuration**
+   - Include your `.gitlab-ci.yml` file in the repository root
+   - Ensure all security scanning stages are properly configured
+
+4. **Document Vulnerabilities**
+   - Use the vulnerability tables in `SUBMISSION.md` to document each finding
+   - Include: ID, severity, type, component, description, impact, and remediation
+   - Organize by category: Web App, Mobile App, Infrastructure, IaC
+
+5. **Final Checklist** (in SUBMISSION.md)
+   - Review the submission checklist at the bottom of `SUBMISSION.md`
+   - Ensure all items are checked before final submission
+
+### Submission Structure
+```
+security-technical-assessment-starter-kit/
+├── SUBMISSION.md (← Fill this out!)
+├── .gitlab-ci.yml (← Your CI/CD pipeline)
+├── submissions/
+│   └── reports/
+│       └── [YourName]_Security_Assessment_Report.pdf
+└── [rest of the application code]
+```
+
 ## Notes
 - The database is pre-populated with sample data.
 - You have full access to the source code provided in this repository. White-box testing is encouraged.
